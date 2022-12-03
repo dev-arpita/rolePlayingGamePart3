@@ -24,7 +24,7 @@ function Character(data) {
     }
 
     this.getCharacterHtml = function () {
-        const { elementId, name, avatar, health, diceCount } = this;
+        const { elementId, name, avatar, health, diceCount, diceArray } = this;
         let diceHtml = this.getDiceHtml(diceCount);
            return `
             <div class="character-card">
@@ -32,7 +32,7 @@ function Character(data) {
                 <img class="avatar" src="${avatar}" />
                 <div class="health">health: <b> ${health} </b></div>
                 <div class="dice-container">
-                    ${this.diceArray}
+                    ${diceArray}
                 </div>
             </div>`
     }
