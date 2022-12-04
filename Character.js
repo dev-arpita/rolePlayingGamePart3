@@ -14,16 +14,20 @@ function Character(data) {
 
 /*
 CHALLENGE
-1. Add code to takeDamage so that when he character reaches
-zero heath, they stay at zero health and don't drop below
-zero.
-** hint.md for help!!**
+1. Add a line of code inside the body of the if statement
+in the takeDamage method which will give the character a
+new boolean "dead" when health reaches zero. It can be initialised with "true".
+2. For now, log out that boolean when the character's
+health reaches zero.
 */
 
     this.takeDamage = function(attackScoreArray){
-        const totalAttackScore = attackScoreArray.reduce(function(total, num) {return total + num})
+        const totalAttackScore = attackScoreArray.reduce(function(total, num) {
+            return total + num
+            })
         this.health -= totalAttackScore
-        if(this.health<=0){
+        if (this.health <= 0){
+            this.dead = true
             this.health = 0
         }
     }
