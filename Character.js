@@ -1,29 +1,33 @@
-import {getDiceRollArray, getDicePlaceholderHtml} from './utils.js'
-/*
-Challenge
-1. In the getDiceHtml method, map over currentDiceScore
-to return this string of html template for each element:
-<div class="dice">${num}</div>`. Save this new array
-to diceArray.
-2. Modify the attack() function in index.js to get our
-app working again.
+import { getDiceRollArray, getDicePlaceholderHtml } from './utils.js'
+
+/*CHALLENGE
+1. Ceate a new method inside Character called "takeDamage".
+2. For now, have the method log out the name of the damaged character
+and phrase "is damaged".
+3. In index.js, find the attack() function and call takeDamage
+for each character inside that function.
 */
+
 function Character(data) {
     Object.assign(this, data)
 
     this.diceArray = getDicePlaceholderHtml(this.diceCount)
 
-    this.getDiceHtml = function() {
-        this.currentDiceScore = getDiceRollArray(this.diceCount)
+    this.getDiceHtml = function () {
+        this.currentDiceScore = getDiceRollArray(this.diceCount);
         this.diceArray = this.currentDiceScore.map(function(num){
             return `<div class="dice">${num}</div>`
-        }).join('')
+            }).join("")
+    }
+
+    this.takeDamage = function(){
+        console.log(`${this.name} is damaged`)
     }
 
     this.getCharacterHtml = function () {
         const { elementId, name, avatar, health, diceCount } = this;
 
-           return `
+        return `
             <div class="character-card">
                 <h4 class="name"> ${name} </h4>
                 <img class="avatar" src="${avatar}" />
