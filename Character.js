@@ -1,5 +1,6 @@
 import { getDiceRollArray, getDicePlaceholderHtml } from './utils.js'
 
+
 function Character(data) {
     Object.assign(this, data)
 
@@ -13,7 +14,18 @@ function Character(data) {
     }
 
     this.takeDamage = function(attackScoreArray){
-        console.log(`${this.name}: ${attackScoreArray}`)
+/*
+CHALLENGE
+1. In the takeDamage method, use what you have just learned
+to reduce attackScoreArray to a single number.
+2. Store that number in a const called totalAttackScore
+3. Decrement the health score by totalAttackScore
+*/
+
+    const totalAttackScore = attackScoreArray.reduce(function(total, num){
+        return total + num
+    })
+    this.health -= totalAttackScore
     }
 
     this.getCharacterHtml = function () {
