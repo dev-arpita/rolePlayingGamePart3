@@ -1,32 +1,31 @@
 import characterData from './data.js'
 import Character from './Character.js'
 
-/*
-CHALLENGE
-1. Inside attack(), check if either character is dead.
-If they are, call a new function called endGame().
-2. Set up the new function endGame() and have it
-log out "the game is over".
-*/
-
 function attack() {
-
     wizard.getDiceHtml()
     orc.getDiceHtml()
     wizard.takeDamage(orc.currentDiceScore)
     orc.takeDamage(wizard.currentDiceScore)
-
-    // if(Character.takeDamage === this.dead) {
-    //     endGame()
-    // }
-
+    render()
     if(wizard.dead || orc.dead){
         endGame()
     }
-    render()
 }
-function endGame() {
-    console.log("the game is over")
+
+/*CHALLENGE
+1. Inside endGame(), create a const called endMessage.
+2. Figure out how to set endMessage to say either "The
+Wizard Wins", "The Orc is Victorious", or "No victors -
+all creatures are dead", depending on the health scores
+of the characters.
+3. Log out endMessage
+*/
+
+function endGame(){
+    const endMessage = wizard.health === 0 && orc.health === 0 ?
+    "No victors - all creatures are dead" :
+    wizard.health > 0 ? "The Wizard Wins" :
+    "The Orc is Victorious"
 }
 
 document.getElementById("attack-button").addEventListener('click', attack)
