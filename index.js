@@ -1,32 +1,40 @@
 import characterData from './data.js'
 import Character from './Character.js'
 
-
-/*CHALLENGE
-1. Think what data we need to pass to our new
-takeDamage method.
-2. Add that data as an argument each time we call
-takeDamage below.
-3. In the takeDamage method, take in the data as a
-parameter called 'attackScoreArray' and log it out.
-**hint.md for help!**
+/*
+CHALLENGE
+1. Inside attack(), check if either character is dead.
+If they are, call a new function called endGame().
+2. Set up the new function endGame() and have it
+log out "the game is over".
 */
 
 function attack() {
+
     wizard.getDiceHtml()
     orc.getDiceHtml()
     wizard.takeDamage(orc.currentDiceScore)
     orc.takeDamage(wizard.currentDiceScore)
+
+    // if(Character.takeDamage === this.dead) {
+    //     endGame()
+    // }
+
+    if(wizard.dead || orc.dead){
+        endGame()
+    }
     render()
 }
-
-
-function render() {
-    document.getElementById('hero').innerHTML = wizard.getCharacterHtml();
-    document.getElementById('monster').innerHTML = orc.getCharacterHtml();
+function endGame() {
+    console.log("the game is over")
 }
 
 document.getElementById("attack-button").addEventListener('click', attack)
+
+function render() {
+    document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
+    document.getElementById('monster').innerHTML = orc.getCharacterHtml()
+}
 
 const wizard = new Character(characterData.hero)
 const orc = new Character(characterData.monster)
