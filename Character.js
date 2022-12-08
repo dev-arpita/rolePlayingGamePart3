@@ -1,26 +1,24 @@
 import { getDiceRollArray, getDicePlaceholderHtml } from './utils.js'
 
-/*Challenge
-1. Create a property called maxHealth INSIDE Character that
-stores the maximum health a character can have.
-2. Create an arrow function called getPercentage OUTSIDE
-Character which takes two parameters, remainingHealth and
-maximumHealth. getPercentage should return the % of
-maximumHealth that is remaining.
-3. To test, call getPercentage from within the takeDamage method
-and log out the result.
-**hint.md for help!!**
-*/
-
 const getPercentage = (remainingHealth, maximumHealth) =>
     (100 * remainingHealth) / maximumHealth
-
+/*
+CHALLENGE
+1. Set up a new method called getHealthBarHtml
+2. Create a const called "percent" and set it equals to the
+returned value from our getPercentage function (think what
+arguments you want to pass in).
+3. For now, just log out the value of the new const "percent".
+4. Down in the getCharacterHtml method, set up a const
+called healthBar and set it equal to the returned value
+of the getHealthBarHtml method.
+*/
 
 function Character(data) {
     Object.assign(this, data)
-    this.diceArray = getDicePlaceholderHtml(this.diceCount)
-
     this.maxHealth = this.health
+
+    this.diceArray = getDicePlaceholderHtml(this.diceCount)
 
     this.getDiceHtml = function () {
         this.currentDiceScore = getDiceRollArray(this.diceCount);
@@ -37,9 +35,14 @@ function Character(data) {
         }
     }
 
+    this.getHealthBarHtml = function(){
+        const percent = getPercentage(this.health, this.maxHealth)
+        console.log(percent)
+    }
+
     this.getCharacterHtml = function () {
         const { elementId, name, avatar, health, diceCount } = this;
-
+        const healthBar = this.getHealthBarHtml()
         return `
             <div class="character-card">
                 <h4 class="name"> ${name} </h4>
