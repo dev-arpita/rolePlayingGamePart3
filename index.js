@@ -9,19 +9,10 @@ function getNewMonster() {
     return nextMonsterData ? new Character(nextMonsterData) : {}
 }
 
-/*
-Challenge
-1. Disable the user's ability to attack when a monster dies.
-2. Reneable the user's ability to attack when a new monster
-loads.
-3. When the game is over, disable the user's ability to attack.
-**hint.md for help!!**
-*/
-
 function attack() {
 if(!isWaiting) {
-    wizard.getDiceHtml()
-    monster.getDiceHtml()
+    wizard.setDiceHtml()
+    monster.setDiceHtml()
     wizard.takeDamage(monster.currentDiceScore)
     monster.takeDamage(wizard.currentDiceScore)
     render()
@@ -36,7 +27,6 @@ if(!isWaiting) {
                 monster = getNewMonster()
                 render()
                 isWaiting = false
-                //  document.getElementById("attack-button").disabled = true
             },1500)
         }
         else{
@@ -48,13 +38,13 @@ if(!isWaiting) {
 }
 
 function endGame() {
+      isWaiting = true
     const endMessage = wizard.health === 0 && monster.health === 0 ?
         "No victors - all creatures are dead" :
         wizard.health > 0 ? "The Wizard Wins" :
-            "The Orc is Victorious"
+            "The monsters are Victorious"
 
     const endEmoji = wizard.health > 0 ? "🔮" : "☠️"
-    isWaiting = true
 
         setTimeout(()=>{
             document.body.innerHTML = `
@@ -66,7 +56,6 @@ function endGame() {
                 `
         }, 1500)
     }
-    // document.getElementById("attack-button").disabled = true
 
 
 document.getElementById("attack-button").addEventListener('click', attack)
@@ -74,7 +63,6 @@ document.getElementById("attack-button").addEventListener('click', attack)
 function render() {
     document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
     document.getElementById('monster').innerHTML = monster.getCharacterHtml()
-    //  isWaiting = true
 }
 
 const wizard = new Character(characterData.hero)
