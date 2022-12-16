@@ -2,6 +2,7 @@ import characterData from './data.js'
 import Character from './Character.js'
 
 let monstersArray = ["orc", "demon", "goblin"]
+let isWaiting = false
 
 function getNewMonster() {
     const nextMonsterData = characterData[monstersArray.shift()]
@@ -10,14 +11,15 @@ function getNewMonster() {
 
 /*
 Challenge
-1. Add a pause of 1 second between a monster dying and
-another monster taking it's place.
-2. Add a pause of 1.5 seconds between the last monster
-or the wizard dying, and the endMessage being displayed.
+1. Disable the user's ability to attack when a monster dies.
+2. Reneable the user's ability to attack when a new monster
+loads.
+3. When the game is over, disable the user's ability to attack.
+**hint.md for help!!**
 */
 
-
 function attack() {
+if(!isWaiting) {
     wizard.getDiceHtml()
     monster.getDiceHtml()
     wizard.takeDamage(monster.currentDiceScore)
@@ -29,14 +31,19 @@ function attack() {
     }
     else if(monster.dead){
         if(monstersArray.length > 0){
-            setTimeout(()=>{
+            isWaiting = true
+                 setTimeout(()=>{
                 monster = getNewMonster()
                 render()
+                isWaiting = false
+                //  document.getElementById("attack-button").disabled = true
             },1500)
         }
         else{
             endGame()
         }
+
+    }
     }
 }
 
@@ -47,6 +54,8 @@ function endGame() {
             "The Orc is Victorious"
 
     const endEmoji = wizard.health > 0 ? "🔮" : "☠️"
+    isWaiting = true
+
         setTimeout(()=>{
             document.body.innerHTML = `
                 <div class="end-game">
@@ -56,13 +65,16 @@ function endGame() {
                 </div>
                 `
         }, 1500)
-}
+    }
+    // document.getElementById("attack-button").disabled = true
+
 
 document.getElementById("attack-button").addEventListener('click', attack)
 
 function render() {
     document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
     document.getElementById('monster').innerHTML = monster.getCharacterHtml()
+    //  isWaiting = true
 }
 
 const wizard = new Character(characterData.hero)
